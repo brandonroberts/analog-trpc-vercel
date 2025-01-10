@@ -1,0 +1,55 @@
+{
+  "name": "spartan-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/apps/spartan-app/.nitro",
+        "{workspaceRoot}/dist/apps/spartan-app/ssr",
+        "{workspaceRoot}/dist/apps/spartan-app/analog"
+      ],
+      "options": {
+        "main": "apps/spartan-app/src/main.ts",
+        "configFile": "apps/spartan-app/vite.config.ts",
+        "outputPath": "dist/apps/spartan-app/client",
+        "tsConfig": "apps/spartan-app/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "spartan-app:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "spartan-app:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "spartan-app:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": ["{projectRoot}/coverage"]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "apps/spartan-app/src"
+}
